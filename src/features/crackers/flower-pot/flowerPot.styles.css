@@ -1,0 +1,5 @@
+/* Scoped Styles for Flower Pot Cracker */
+.flower-pot-glow {
+  filter: drop-shadow(0 0 16px rgba(245, 158, 11, 0.7));
+}
+

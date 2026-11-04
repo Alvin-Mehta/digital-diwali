@@ -1,0 +1,5 @@
+/* Scoped Styles for Chakri Cracker */
+.chakri-glow {
+  filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.6));
+}
+

@@ -1,0 +1,108 @@
+/* Digital Diwali - Motion & Keyframe Animations */
+
+@keyframes diyaFlicker {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 12px rgba(252, 211, 77, 0.8));
+  }
+  25% {
+    transform: scale(1.06, 0.94) translate(-0.5px, -1px);
+    opacity: 1;
+    filter: drop-shadow(0 0 18px rgba(255, 107, 0, 0.9));
+  }
+  50% {
+    transform: scale(0.96, 1.04) translate(0.5px, 0.5px);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.7));
+  }
+  75% {
+    transform: scale(1.03, 0.97) translate(-0.5px, 0);
+    opacity: 0.98;
+    filter: drop-shadow(0 0 16px rgba(252, 211, 77, 0.85));
+  }
+}
+
+@keyframes pulseGold {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.35), inset 0 0 15px rgba(245, 158, 11, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.65), inset 0 0 25px rgba(245, 158, 11, 0.35);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes sparkleSpin {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes matchBurn {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px #ff6b00);
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px #fcd34d);
+    transform: scale(1.15);
+  }
+}
+
+@keyframes fuseSpark {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx, 5px), var(--dy, -5px)) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-diya-flicker {
+  animation: diyaFlicker 2.8s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulseGold 2.4s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.animate-match-burn {
+  animation: matchBurn 0.4s ease-in-out infinite;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

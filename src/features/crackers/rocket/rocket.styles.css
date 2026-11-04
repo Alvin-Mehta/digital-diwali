@@ -1,0 +1,5 @@
+/* Scoped Styles for Rocket Cracker */
+.rocket-flame-trail {
+  filter: drop-shadow(0 0 12px rgba(255, 107, 0, 0.8));
+}
+
