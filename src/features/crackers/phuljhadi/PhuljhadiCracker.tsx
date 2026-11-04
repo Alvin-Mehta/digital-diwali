@@ -17,12 +17,14 @@ export const PhuljhadiCracker: React.FC<CrackerStageProps> = ({ phase, progress 
   // Handheld natural subtle waving motion
   const waveAngle = isSparkling ? Math.sin(progress * 18) * 4 : 0;
 
+  const sparklerSize = typeof window !== 'undefined' && window.innerWidth < 640 ? 170 : 210;
+
   return (
     <div className="relative flex flex-col items-center justify-center w-full h-full pointer-events-none">
       {/* Radiant Spark Ambient Light */}
       {isSparkling && (
         <div
-          className="absolute w-56 h-56 rounded-full bg-amber-400/35 blur-3xl pointer-events-none"
+          className="absolute w-44 sm:w-56 h-44 sm:h-56 rounded-full bg-amber-400/35 blur-3xl pointer-events-none"
           style={{
             transform: `scale(${0.8 + Math.random() * 0.4})`,
             top: `${15 + progress * 35}%`,
@@ -38,7 +40,7 @@ export const PhuljhadiCracker: React.FC<CrackerStageProps> = ({ phase, progress 
         }}
       >
         <PhuljhadiIllustration
-          size={210}
+          size={sparklerSize}
           isFuseBurning={isFuseBurning}
           isSparkling={isSparkling}
           burnProgress={isSparkling ? progress : 0}

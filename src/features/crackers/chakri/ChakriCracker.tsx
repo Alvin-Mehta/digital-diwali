@@ -27,12 +27,14 @@ export const ChakriCracker: React.FC<CrackerStageProps> = ({ phase, progress }) 
     offsetY = Math.cos(progress * 12) * 12 * speedCurve;
   }
 
+  const chakriSize = typeof window !== 'undefined' && window.innerWidth < 640 ? 115 : 140;
+
   return (
-    <div className="relative flex flex-col items-center justify-end w-full h-full pb-10 pointer-events-none">
+    <div className="relative flex flex-col items-center justify-end w-full h-full pb-6 sm:pb-10 pointer-events-none">
       {/* Dynamic Ground Light Ring */}
       {isSpinning && (
         <div
-          className="absolute bottom-6 w-48 h-24 rounded-full bg-emerald-500/25 blur-2xl pointer-events-none"
+          className="absolute bottom-4 sm:bottom-6 w-36 sm:w-48 h-20 sm:h-24 rounded-full bg-emerald-500/25 blur-2xl pointer-events-none"
           style={{
             transform: `scale(${1 + Math.sin(progress * Math.PI) * 0.8})`,
           }}
@@ -46,7 +48,7 @@ export const ChakriCracker: React.FC<CrackerStageProps> = ({ phase, progress }) 
         }}
       >
         <ChakriIllustration
-          size={140}
+          size={chakriSize}
           isFuseBurning={isFuseBurning}
           rotationDeg={rotationDeg}
         />

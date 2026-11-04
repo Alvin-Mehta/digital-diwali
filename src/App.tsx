@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Header } from './components/layout/Header';
 import { WelcomeScreen } from './features/welcome/WelcomeScreen';
 import { CrackerMenu } from './features/crackers/menu/CrackerMenu';
+import { MobileCrackerSelector } from './features/crackers/menu/MobileCrackerSelector';
 import { CelebrationStage } from './features/celebration/CelebrationStage';
 import { InviteFriendsModal } from './features/modals/InviteFriendsModal';
 import { FullRoomModal } from './features/modals/FullRoomModal';
@@ -144,10 +145,10 @@ export function App() {
         onOpenWelcome={() => setShowWelcome(true)}
       />
 
-      {/* Main Two-Column Layout (30% Menu / 70% Celebration Stage) */}
-      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden">
-        {/* Left Section: Cracker Selection Menu (Desktop 30% / Mobile Responsive Drawer/Top) */}
-        <aside className="w-full md:w-[32%] lg:w-[28%] h-auto md:h-[calc(100vh-61px)] shrink-0 z-20">
+      {/* Main Layout: Desktop 30%/70% Split | Mobile Full Stage with Horizontal Selector */}
+      <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden relative min-h-0">
+        {/* Left Section (Desktop Only ~30%): Vertical Cracker Selection Menu */}
+        <aside className="hidden md:block w-full md:w-[32%] lg:w-[28%] h-[calc(100vh-61px)] shrink-0 z-20">
           <CrackerMenu
             crackers={crackerRegistry}
             selectedCracker={selectedCracker}
@@ -156,8 +157,8 @@ export function App() {
           />
         </aside>
 
-        {/* Right Section: Main Celebration Stage (Desktop 70% / Mobile flex-1) */}
-        <section className="flex-1 h-[65vh] md:h-[calc(100vh-61px)] relative z-10">
+        {/* Right Section: Main Celebration Stage (Full-width on Mobile & ~70% on Desktop) */}
+        <section className="flex-1 h-[calc(100dvh-61px)] md:h-[calc(100vh-61px)] relative z-10 flex flex-col overflow-hidden">
           <CelebrationStage
             cracker={selectedCracker}
             isIgniting={isIgniting}
@@ -166,6 +167,14 @@ export function App() {
             isMuted={isMuted}
             participants={participants}
             currentUserId={currentUserId}
+            mobileSelector={
+              <MobileCrackerSelector
+                crackers={crackerRegistry}
+                selectedCracker={selectedCracker}
+                onSelectCracker={handleSelectCracker}
+                isIgniting={isIgniting}
+              />
+            }
           />
         </section>
       </main>

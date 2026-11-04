@@ -15,18 +15,22 @@ export const RocketCracker: React.FC<CrackerStageProps> = ({ phase, progress }) 
   const isAscending = phase === 'active';
   const isBursting = phase === 'peak' || phase === 'decay';
 
-  // Rocket ascent physics calculation
+  // Rocket ascent physics calculation - dynamically responsive to stage height
+  const maxAscent = typeof window !== 'undefined'
+    ? Math.min(360, Math.max(180, window.innerHeight * 0.38))
+    : 300;
+
   let translateY = 0;
   let opacity = 1;
   let scale = 1;
 
   if (isAscending) {
     // Accelerate upwards
-    translateY = -progress * 420;
+    translateY = -progress * maxAscent;
     scale = Math.max(0.6, 1 - progress * 0.4);
   } else if (isBursting) {
     // Detonated in the sky
-    translateY = -420;
+    translateY = -maxAscent;
     opacity = Math.max(0, 1 - progress * 4); // Disappear quickly on burst
   }
 

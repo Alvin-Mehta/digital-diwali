@@ -54,3 +54,12 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-border-medium);
 }
+
+/* Hide scrollbar for horizontal mobile strips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -48,7 +48,7 @@ export const Modal: React.FC<ModalProps> = ({
       {/* Modal Dialog Card */}
       <div
         ref={modalRef}
-        className={`relative z-10 w-full ${maxWidth} glass-panel-elevated rounded-2xl border border-gold-500/30 p-6 shadow-2xl transition-all animate-float-gentle`}
+        className={`relative z-10 w-full ${maxWidth} max-h-[90dvh] overflow-y-auto glass-panel-elevated rounded-2xl border border-gold-500/30 p-5 sm:p-6 shadow-2xl transition-all`}
       >
         {/* Ornate Gold Top Header Accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent rounded-full" />

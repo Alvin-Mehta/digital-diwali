@@ -24,8 +24,10 @@ export const SutliBombCracker: React.FC<CrackerStageProps> = ({ phase, progress 
     scale = 1 + progress * 0.4;
   }
 
+  const bombSize = typeof window !== 'undefined' && window.innerWidth < 640 ? 115 : 140;
+
   return (
-    <div className="relative flex flex-col items-center justify-end w-full h-full pb-10 pointer-events-none">
+    <div className="relative flex flex-col items-center justify-end w-full h-full pb-6 sm:pb-10 pointer-events-none">
       {/* Blinding Screen Flash Bloom on Detonation */}
       {isDetonating && progress < 0.35 && (
         <div
@@ -42,7 +44,7 @@ export const SutliBombCracker: React.FC<CrackerStageProps> = ({ phase, progress 
         }}
       >
         <SutliBombIllustration
-          size={140}
+          size={bombSize}
           isFuseBurning={isFuseBurning}
         />
       </div>
