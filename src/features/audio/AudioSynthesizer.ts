@@ -363,6 +363,91 @@ export class AudioSynthesizer {
     noise.start(now);
     noise.stop(now + durationSec);
   }
+
+  /**
+   * Welcome Sequence: Sacred Divine Chime when Namaste hands join
+   * Warm harmonic resonant bell / singing bowl chord (C#5, G#5, C#6)
+   */
+  public playNamasteChime(): void {
+    const ctx = this.initContext();
+    if (!ctx || !this.masterGain || this.isMuted) return;
+
+    const now = ctx.currentTime;
+    // Harmonic frequencies in Raag Yaman fifths: 554.37 (C#5), 830.61 (G#5), 1108.73 (C#6)
+    const freqs = [554.37, 830.61, 1108.73];
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const oscGain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+      const peakGain = 0.22 / (idx + 1);
+      oscGain.gain.setValueAtTime(0.001, now + idx * 0.04);
+      oscGain.gain.linearRampToValueAtTime(peakGain, now + idx * 0.04 + 0.05);
+      oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+
+      osc.connect(oscGain);
+      oscGain.connect(this.masterGain!);
+
+      osc.start(now + idx * 0.04);
+      osc.stop(now + 2.8);
+    });
+  }
+
+  /**
+   * Welcome Sequence: Soft warm ignition flame puff when a Diya lights up
+   */
+  public playDiyaIgnite(): void {
+    const ctx = this.initContext();
+    if (!ctx || !this.masterGain || this.isMuted) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(440, now + 0.08);
+    osc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
+
+    oscGain.gain.setValueAtTime(0.001, now);
+    oscGain.gain.linearRampToValueAtTime(0.12, now + 0.03);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.35);
+
+    osc.connect(oscGain);
+    oscGain.connect(this.masterGain);
+
+    osc.start(now);
+    osc.stop(now + 0.35);
+  }
+
+  /**
+   * Welcome Sequence: Subtle celestial sparkle for fairy lights
+   */
+  public playFairyTwinkle(): void {
+    const ctx = this.initContext();
+    if (!ctx || !this.masterGain || this.isMuted) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+
+    osc.type = 'sine';
+    const randFreq = 1400 + Math.random() * 600;
+    osc.frequency.setValueAtTime(randFreq, now);
+
+    oscGain.gain.setValueAtTime(0.001, now);
+    oscGain.gain.linearRampToValueAtTime(0.06, now + 0.02);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
+    osc.connect(oscGain);
+    oscGain.connect(this.masterGain);
+
+    osc.start(now);
+    osc.stop(now + 0.4);
+  }
 }
 
 export const audioSynthesizer = new AudioSynthesizer();

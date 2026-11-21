@@ -26,6 +26,9 @@ describe('AudioManager Subsystem', () => {
     expect(() => audioManager.playChakriSpin(1000)).not.toThrow();
     expect(() => audioManager.playBombDetonate()).not.toThrow();
     expect(() => audioManager.playPhuljhadiSizzle(1000)).not.toThrow();
+    expect(() => audioManager.playNamasteChime()).not.toThrow();
+    expect(() => audioManager.playDiyaIgnite()).not.toThrow();
+    expect(() => audioManager.playFairyTwinkle()).not.toThrow();
   });
 });
 

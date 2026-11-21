@@ -65,6 +65,19 @@ class AudioManager {
   public playPhuljhadiSizzle(durationMs: number = 4000): void {
     audioSynthesizer.playPhuljhadiSizzle(durationMs);
   }
+
+  // Welcome Hero Animation Cues
+  public playNamasteChime(): void {
+    audioSynthesizer.playNamasteChime();
+  }
+
+  public playDiyaIgnite(): void {
+    audioSynthesizer.playDiyaIgnite();
+  }
+
+  public playFairyTwinkle(): void {
+    audioSynthesizer.playFairyTwinkle();
+  }
 }
 
 export const audioManager = new AudioManager();
