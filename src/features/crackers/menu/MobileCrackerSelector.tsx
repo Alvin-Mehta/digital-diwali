@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { ChevronUp, X, Sparkles, Check } from 'lucide-react';
+import { ChevronUp, X, Check, ShieldCheck, Sparkles } from 'lucide-react';
 import { CrackerDefinition } from '../types';
-import { Badge } from '../../../components/ui/Badge';
+import { CrackerCard } from './CrackerCard';
 
 interface MobileCrackerSelectorProps {
   crackers: CrackerDefinition[];
@@ -32,22 +32,24 @@ export const MobileCrackerSelector: React.FC<MobileCrackerSelectorProps> = ({
 
   return (
     <>
-      {/* Horizontal Carousel Bar (Sticky at bottom above action button or compact tray) */}
-      <div className="w-full bg-bg-deep/90 backdrop-blur-md border-t border-gold-500/20 px-3 py-2 z-20">
+      {/* Floating Pill Dock on Mobile (Samsung/Apple Aesthetic) */}
+      <div className="w-full bg-[#0b0417]/95 backdrop-blur-2xl border-t border-white/[0.08] px-3 py-2 z-20">
         <div className="flex items-center justify-between mb-1.5 px-1">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-bold text-gold-400 uppercase tracking-wider">
-              Select Cracker
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black tracking-widest text-gold-400 uppercase">
+              ARSENAL
             </span>
-            <span className="text-[10px] text-text-dim">
-              ({crackers.findIndex((c) => c.id === selectedCracker.id) + 1}/{crackers.length})
+            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <span className="text-[10px] font-mono text-text-muted">
+              0{crackers.findIndex((c) => c.id === selectedCracker.id) + 1} / 0{crackers.length}
             </span>
           </div>
+
           <button
             onClick={() => setIsDrawerOpen(true)}
-            className="text-[11px] text-gold-400 flex items-center gap-0.5 hover:text-gold-300 font-semibold py-0.5 px-2 rounded-md bg-bg-surface border border-gold-500/20"
+            className="text-[11px] text-gold-400 flex items-center gap-1 hover:text-gold-300 font-semibold py-0.5 px-2.5 rounded-full bg-white/[0.05] border border-white/10 active:scale-95 transition-all"
           >
-            <span>Details</span>
+            <span>All 5 Items</span>
             <ChevronUp size={12} />
           </button>
         </div>
@@ -58,7 +60,7 @@ export const MobileCrackerSelector: React.FC<MobileCrackerSelectorProps> = ({
           className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1"
           style={{ WebkitOverflowScrolling: 'touch' }}
         >
-          {crackers.map((c) => {
+          {crackers.map((c, idx) => {
             const isSelected = c.id === selectedCracker.id;
             const Thumb = c.ThumbnailComponent;
             return (
@@ -67,25 +69,28 @@ export const MobileCrackerSelector: React.FC<MobileCrackerSelectorProps> = ({
                 data-cracker-id={c.id}
                 onClick={() => onSelectCracker(c)}
                 disabled={isIgniting}
-                className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all text-left select-none ${
+                className={`flex-shrink-0 flex items-center gap-2.5 px-3 py-2 rounded-2xl border transition-all text-left select-none ${
                   isSelected
-                    ? 'bg-bg-elevated border-gold-400 ring-1 ring-gold-400 shadow-festive'
-                    : 'bg-bg-surface/80 border-gold-500/15 text-text-muted hover:border-gold-500/40'
+                    ? 'bg-gradient-to-r from-gold-500/20 via-[#22123f] to-[#120826] border-gold-400/90 shadow-[0_0_20px_rgba(245,158,11,0.25)] ring-1 ring-gold-400/40'
+                    : 'bg-[#150a2b]/70 border-white/[0.08] text-text-muted hover:border-gold-500/30'
                 } ${isIgniting ? 'opacity-50 cursor-not-allowed' : 'active:scale-95'}`}
               >
-                <div className="w-8 h-8 rounded-lg bg-bg-deep/80 flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-xl bg-[#090314] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
                   <Thumb isSelected={isSelected} />
                 </div>
                 <div className="flex flex-col">
+                  <span className="text-[9px] font-mono font-bold text-text-dim">
+                    0{idx + 1}
+                  </span>
                   <span
-                    className={`text-xs font-bold leading-tight ${
-                      isSelected ? 'text-gold-300' : 'text-text-primary'
+                    className={`text-xs font-bold leading-tight font-festive ${
+                      isSelected ? 'text-gold-300' : 'text-white'
                     }`}
                   >
                     {c.name.split(' ')[0]} {c.name.split(' ')[1] || ''}
                   </span>
-                  <span className="text-[9px] text-text-dim capitalize">
-                    {c.category}
+                  <span className="text-[9px] text-text-muted capitalize">
+                    {c.category} &bull; {(c.durationMs / 1000).toFixed(1)}s
                   </span>
                 </div>
                 {isSelected && (
@@ -97,86 +102,62 @@ export const MobileCrackerSelector: React.FC<MobileCrackerSelectorProps> = ({
         </div>
       </div>
 
-      {/* Full Mobile Drawer / Bottom Sheet */}
+      {/* Full iOS/Apple Style Drawer / Bottom Sheet */}
       {isDrawerOpen && (
         <div className="fixed inset-0 z-50 flex flex-col justify-end">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
             onClick={() => setIsDrawerOpen(false)}
           />
 
           {/* Drawer Body */}
-          <div className="relative z-10 w-full max-h-[80vh] flex flex-col rounded-t-3xl bg-bg-deep border-t border-gold-500/30 p-5 shadow-2xl animate-float-gentle">
+          <div className="relative z-10 w-full max-h-[85vh] flex flex-col rounded-t-[32px] bg-[#0c041c]/95 border-t border-white/[0.1] p-4 sm:p-5 shadow-2xl backdrop-blur-2xl">
             {/* Grab Handle */}
-            <div className="w-12 h-1 bg-gold-500/30 rounded-full mx-auto mb-4" />
+            <div className="w-12 h-1 bg-white/20 rounded-full mx-auto mb-4" />
 
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-festive text-lg font-bold text-gold-400">
-                  Cracker Collection
+                <div className="flex items-center gap-1.5 mb-0.5">
+                  <Sparkles size={11} className="text-gold-400" />
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-text-muted">
+                    CURATED ARSENAL
+                  </span>
+                </div>
+                <h3 className="font-festive text-lg font-bold text-white">
+                  Select Cracker
                 </h3>
-                <p className="text-xs text-text-muted">
-                  Choose a cracker to celebrate with
-                </p>
               </div>
               <button
                 onClick={() => setIsDrawerOpen(false)}
-                className="p-1.5 rounded-lg text-text-muted hover:text-white bg-bg-surface border border-gold-500/20"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-text-muted hover:text-white bg-white/[0.05] border border-white/10"
                 aria-label="Close drawer"
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
 
-            {/* Cracker List in Drawer */}
-            <div className="overflow-y-auto space-y-2.5 pr-1">
-              {crackers.map((c) => {
-                const isSelected = c.id === selectedCracker.id;
-                const Thumb = c.ThumbnailComponent;
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => {
-                      onSelectCracker(c);
-                      setIsDrawerOpen(false);
-                    }}
-                    disabled={isIgniting}
-                    className={`w-full p-3 rounded-2xl border text-left flex items-center gap-3 transition-all ${
-                      isSelected
-                        ? 'bg-bg-elevated border-gold-400 ring-1 ring-gold-400 shadow-festive'
-                        : 'bg-bg-surface/70 border-gold-500/15 hover:bg-bg-surface'
-                    }`}
-                  >
-                    <div className="w-14 h-14 rounded-xl bg-bg-deep/80 border border-gold-500/20 flex items-center justify-center shrink-0">
-                      <Thumb isSelected={isSelected} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-1.5 mb-0.5">
-                        <Badge variant="gold">{c.category}</Badge>
-                        {c.hindiName && (
-                          <span className="text-[10px] text-text-muted truncate">
-                            {c.hindiName}
-                          </span>
-                        )}
-                      </div>
-                      <h4 className="font-festive text-sm font-bold text-text-primary truncate">
-                        {c.name}
-                      </h4>
-                      <p className="text-[11px] text-text-muted line-clamp-1">
-                        {c.tagline}
-                      </p>
-                    </div>
-                  </button>
-                );
-              })}
+            {/* Cracker List in Drawer using CrackerCard */}
+            <div className="overflow-y-auto space-y-3 pr-1 flex-1 min-h-0 custom-scrollbar">
+              {crackers.map((c) => (
+                <CrackerCard
+                  key={c.id}
+                  cracker={c}
+                  isSelected={c.id === selectedCracker.id}
+                  onSelect={(selected) => {
+                    onSelectCracker(selected);
+                    setIsDrawerOpen(false);
+                  }}
+                  disabled={isIgniting}
+                />
+              ))}
             </div>
 
-            {/* Eco Banner */}
-            <div className="mt-4 pt-3 border-t border-gold-500/10 flex items-center justify-center gap-1.5 text-[11px] text-emerald-400">
-              <Sparkles size={13} />
-              <span>100% Zero Pollution Digital Fireworks</span>
+            {/* Eco Banner in Drawer */}
+            <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-center gap-2 text-[11px] text-emerald-400">
+              <ShieldCheck size={14} />
+              <span>100% Zero Emission &bull; Virtual Celebration VFX</span>
             </div>
           </div>
         </div>
@@ -184,4 +165,3 @@ export const MobileCrackerSelector: React.FC<MobileCrackerSelectorProps> = ({
     </>
   );
 };
-

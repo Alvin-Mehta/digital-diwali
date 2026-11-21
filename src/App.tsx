@@ -147,13 +147,16 @@ export function App() {
 
       {/* Main Layout: Desktop 30%/70% Split | Mobile Full Stage with Horizontal Selector */}
       <main className="flex-1 flex flex-col md:flex-row w-full overflow-hidden relative min-h-0">
-        {/* Left Section (Desktop Only ~30%): Vertical Cracker Selection Menu */}
-        <aside className="hidden md:block w-full md:w-[32%] lg:w-[28%] h-[calc(100vh-61px)] shrink-0 z-20">
+        {/* Left Section (Desktop Only): Vertical Cracker Selection Menu */}
+        <aside className="hidden md:block w-full md:w-[360px] lg:w-[390px] xl:w-[420px] h-[calc(100vh-61px)] shrink-0 z-20">
           <CrackerMenu
             crackers={crackerRegistry}
             selectedCracker={selectedCracker}
             onSelectCracker={handleSelectCracker}
             isIgniting={isIgniting}
+            isMuted={isMuted}
+            onToggleMute={handleToggleMute}
+            onIgnite={handleIgnite}
           />
         </aside>
 
